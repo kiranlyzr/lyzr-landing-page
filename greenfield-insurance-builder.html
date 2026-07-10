@@ -210,9 +210,12 @@ td{
 
 /* Column widths per table. The Owner column was too narrow, which forced
    the owner tags to stack; it now holds two tags side by side. */
-.tbl-systems th:nth-child(1){width:20%}
-.tbl-systems th:nth-child(2){width:27%}
-.tbl-systems th:nth-child(3){width:21%}
+/* Owner holds up to three tags ("Lyzr + AWS + Accenture" needs ~209px of
+   content). 26% clears that at 1024px and up; below that it wraps to a
+   second line with a proper gap, which is fine. */
+.tbl-systems th:nth-child(1){width:19%}
+.tbl-systems th:nth-child(2){width:23%}
+.tbl-systems th:nth-child(3){width:26%}
 .tbl-systems th:nth-child(4){width:32%}
 .tbl-team th:nth-child(1){width:44%}
 .tbl-team th:nth-child(2){width:46px}
@@ -347,6 +350,16 @@ ul.tight li b{color:var(--fg);font-weight:600}
 /* two team tables side by side get cramped below 1150px */
 @media(max-width:1150px){
   .grid2{grid-template-columns:1fr;gap:22px}
+}
+
+/* Between 768px and 1023px the systems table keeps all four columns but the
+   Owner cell gets tight. Slightly smaller pills keep multi-tag owners on a
+   single line instead of breaking to a second row. */
+@media(max-width:1023px){
+  .tag{font-size:10px;padding:3px 8px 3px 6px;gap:4px}
+  .owner-cell .tags{gap:5px}
+  td{padding:13px 12px}
+  thead th{padding:13px 12px}
 }
 @media(max-width:900px){
   .hdr{padding:72px 0 62px}
@@ -526,9 +539,9 @@ ul.tight li b{color:var(--fg);font-weight:600}
 <tr><td data-label="System"><b>Contact Centre</b></td><td data-label="Purpose">Voice/IVR, routing, conversation intelligence</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-aws">Amazon Connect</span></span></td><td data-label="Lyzr's role">Lyzr Voice Agents integrate (open APIs; Genesys optional)</td></tr>
 <tr><td data-label="System"><b>Data Platform &amp; Reporting</b></td><td data-label="Purpose">Lakehouse, analytics, IRDAI + Ind AS 117 reporting</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-pkg">Databricks</span></span></td><td data-label="Lyzr's role">Integrate; agentic BI + org-intelligence on top</td></tr>
 <tr><td data-label="System"><b>Finance / GL &amp; Actuarial</b></td><td data-label="Purpose">General ledger, actuarial engine, Ind AS 117 / CSM</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-pkg">Packaged</span></span></td><td data-label="Lyzr's role">Integrate for postings &amp; reporting feeds</td></tr>
-<tr><td data-label="System"><b>Identity &amp; Access (MCF)</b></td><td data-label="Purpose">SSO, MFA, RBAC across all apps</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-lyzr">Lyzr</span> <span class="tag t-aws">+ AWS IAM</span></span></td><td data-label="Lyzr's role">Identity Broker (any IdP) — out of the box</td></tr>
+<tr><td data-label="System"><b>Identity &amp; Access (MCF)</b></td><td data-label="Purpose">SSO, MFA, RBAC across all apps</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-lyzr">Lyzr</span> <span class="tag t-aws">+ AWS Cognito</span></span></td><td data-label="Lyzr's role">Identity Broker (any IdP) — out of the box</td></tr>
 <tr><td data-label="System"><b>Integration Layer / API Mgmt</b></td><td data-label="Purpose">Event bus, connectors, A2A/MCP interop</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-lyzr">Lyzr</span> <span class="tag t-aws">+ AWS</span></span></td><td data-label="Lyzr's role">SuperFlow + MCP/A2A/REST connectors as the spine</td></tr>
-<tr><td data-label="System"><b>Cloud, Security &amp; Compliance</b></td><td data-label="Purpose">Landing zone, VAPT, DPDP, incident response</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-aws">AWS</span> <span class="tag t-acc">+ Accenture</span></span></td><td data-label="Lyzr's role">Lyzr Govern: RAI, audit-log, ISO 27001 controls</td></tr>
+<tr><td data-label="System"><b>Cloud, Security &amp; Compliance</b></td><td data-label="Purpose">Landing zone, VAPT, DPDP, incident response</td><td class="owner-cell" data-label="Owner"><span class="tags"><span class="tag t-lyzr">Lyzr</span> <span class="tag t-aws">+ AWS</span> <span class="tag t-acc">+ Accenture</span></span></td><td data-label="Lyzr's role">Lyzr Govern: RAI, audit-log, ISO 27001 controls</td></tr>
 </tbody>
 </table></div>
 <p class="note">Legend — <span class="tag t-lyzr">Lyzr</span> build/configure on platform · <span class="tag t-pkg">Packaged</span> buy &amp; configure · <span class="tag t-acc">Accenture</span> external build · <span class="tag t-aws">AWS</span> cloud-native service.</p>
