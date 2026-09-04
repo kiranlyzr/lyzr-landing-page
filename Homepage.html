@@ -1435,5 +1435,22 @@
 <script src="js/water.js" defer></script>
 <script src="js/meganav.js"></script>
 <script src="js/ribbon.js"></script>
+  
+  <script>
+  function sendLyzrHeight(){
+    var h = Math.max(
+      document.documentElement.scrollHeight,
+      document.body.scrollHeight
+    );
+    parent.postMessage({ lyzrHeight: h }, '*');
+  }
+  window.addEventListener('load', sendLyzrHeight);
+  window.addEventListener('resize', sendLyzrHeight);
+  // catch late image/font layout shifts
+  setTimeout(sendLyzrHeight, 500);
+  setTimeout(sendLyzrHeight, 1500);
+  setInterval(sendLyzrHeight, 2000);
+</script>
+
 </body>
 </html>
