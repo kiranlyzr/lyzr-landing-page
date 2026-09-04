@@ -1298,7 +1298,7 @@
         <h3>Address</h3>
         <p>525 Washington Blvd, 2410, Jersey City, NJ 07310, USA</p>
         <h3>Join 24,647+ subscribers</h3>
-        <form class="subscribe" onsubmit="return false;">
+        <form class="subscribe" id="footerSubscribeForm">
           <label class="visually-hidden" for="nl">Email address</label>
           <input id="nl" type="email" placeholder="Enter your email" autocomplete="email" required>
           <button type="submit">Subscribe</button>
@@ -1430,11 +1430,26 @@
   </div>
 </footer>
 
+<script>
+(function () {
+  var form = document.getElementById('footerSubscribeForm');
+  if (!form) return;
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    var input = document.getElementById('nl');
+    var email = (input.value || '').trim();
+    if (!email || !input.checkValidity()) {
+      input.focus();
+      return;
+    }
+    form.innerHTML = '<p class="subscribe-success">You\'re subscribed! Real agent stories, no spam.</p>';
+  });
+})();
+</script>
 <script src="js/main.js"></script>
 <script src="js/water-data.js" defer></script>
 <script src="js/water.js" defer></script>
 <script src="js/meganav.js"></script>
 <script src="js/ribbon.js"></script>
-
 </body>
 </html>
