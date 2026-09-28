@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Book a demo | Lyzr AI</title>
+<meta name="description" content="See Lyzr on your use case. Request a demo, then chat with our AI or call an SDR straight away.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ───────── Lyzr brand tokens ───────── */
+:root{
+  --orange:#FE4B1E; --orange-press:#E8420F; --navy:#043E77; --navy-deep:#032B54; --forest:#063B28;
+  --off-white:#FAFAF9; --grey-100:#F1F0EE; --grey-200:#E3E1DE; --grey-300:#CFCCC7; --grey-400:#B8B4AD;
+  --grey-600:#8A857C; --grey-700:#6B675F; --black:#1F2022;
+
+  --bg:#fff; --surface:#fff; --surface-2:var(--grey-100);
+  --text:var(--black); --text-2:var(--grey-700); --border:var(--grey-200); --border-strong:var(--grey-300);
+  --focus:var(--navy); --ok:var(--forest); --ok-dot:#2F9E6B; --err:#B42318;
+  --radius:4px;
+  --sans:'Inter',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;
+  --mono:'JetBrains Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#141516; --surface:#1B1C1E; --surface-2:#2A2B2D;
+    --text:var(--off-white); --text-2:var(--grey-400); --border:#3A3937; --border-strong:#4A4744;
+    --focus:#7FB4F0; --ok:#5CC49A; --err:#F97066;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#141516; --surface:#1B1C1E; --surface-2:#2A2B2D;
+  --text:var(--off-white); --text-2:var(--grey-400); --border:#3A3937; --border-strong:#4A4744;
+  --focus:#7FB4F0; --ok:#5CC49A; --err:#F97066;
+}
+
+*{box-sizing:border-box}
+html{height:100%;scroll-padding-top:env(safe-area-inset-top,0px)}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--text);font-family:var(--sans);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.left :focus-visible{outline-color:#fff}
+[hidden]{display:none !important}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ───────── split layout ───────── */
+.page{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);min-height:100vh}
+@media (max-width:920px){.page{grid-template-columns:1fr}}
+
+/* LEFT: pool panel */
+.left{position:relative;overflow:hidden;color:#fff;padding:36px 40px 36px;display:flex;flex-direction:column;
+  background:
+    radial-gradient(60% 40% at 25% 18%,rgba(120,175,255,.32),transparent 70%),
+    radial-gradient(50% 35% at 78% 42%,rgba(90,150,240,.26),transparent 70%),
+    radial-gradient(70% 45% at 30% 78%,rgba(70,130,230,.22),transparent 70%),
+    linear-gradient(180deg,#05468a 0%,var(--navy) 45%,var(--navy-deep) 100%)}
+.left::before{ /* lane rope */
+  content:"";position:absolute;top:0;bottom:0;left:31%;width:8px;opacity:.55;
+  background:radial-gradient(circle,#fff 1.6px,transparent 2.2px) 0 0/8px 13px repeat-y;pointer-events:none;
+  -webkit-mask-image:linear-gradient(180deg,#000 0,#000 55%,transparent 72%);mask-image:linear-gradient(180deg,#000 0,#000 55%,transparent 72%)}
+.left::after{ /* caustic ripples */
+  content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;mix-blend-mode:screen;
+  background:
+    repeating-radial-gradient(circle at 22% 24%,transparent 0 26px,rgba(255,255,255,.07) 27px 29px),
+    repeating-radial-gradient(circle at 74% 60%,transparent 0 34px,rgba(255,255,255,.06) 35px 37px)}
+.left>*{position:relative;z-index:1}
+@media (min-width:921px){.left{position:sticky;top:0;height:100vh}}
+@media (max-width:920px){.left{padding:28px 22px}}
+.wordmark{font-weight:700;font-size:22px;letter-spacing:-.02em;text-decoration:none;color:#fff;display:inline-flex;align-items:center;gap:8px;width:fit-content}
+.wordmark i{display:block;width:10px;height:10px;background:var(--orange);border-radius:2px}
+
+.proof{margin-top:auto;padding-top:120px}
+@media (max-width:920px){.proof{padding-top:48px}}
+.proof blockquote{margin:0 0 6px;font-size:20px;line-height:1.35;font-weight:500;max-width:30ch}
+.proof .who{font-size:15px;color:rgba(255,255,255,.78);margin:0 0 26px}
+.logos{display:flex;flex-wrap:wrap;gap:10px 24px;font-weight:700;font-size:14px;letter-spacing:.06em}
+
+/* after-submit: Want to talk now? */
+.talk{flex:1;min-height:0;display:flex;flex-direction:column}
+.talk h2{font-size:clamp(28px,3vw,34px);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:44px 0 24px}
+.tcard{background:#fff;color:var(--black);border-radius:var(--radius);padding:20px;margin-bottom:16px}
+.tcard h3{margin:0 0 14px;font-size:19px;font-weight:700;letter-spacing:-.01em}
+.tcard .meta{font-family:var(--mono);font-size:12.5px;color:var(--grey-700);margin:10px 0 0}
+.tbtn{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;padding:0 16px;border-radius:var(--radius);border:2px solid var(--navy);font-size:16px;font-weight:600;text-decoration:none;cursor:pointer;background:transparent;color:var(--navy);transition:background .15s}
+.tbtn.solid{background:var(--navy);color:#fff}
+.tbtn.solid:hover{background:var(--navy-deep)}
+.tbtn.line:hover{background:#E9F0F8}
+.avail{display:flex;align-items:flex-start;gap:10px;margin:0 0 14px;font-weight:600;font-size:15.5px;line-height:1.35}
+.avail .dot{flex:none;width:12px;height:12px;border-radius:50%;margin-top:5px;background:var(--grey-400)}
+.avail.open{color:#1F7A4F}.avail.open .dot{background:var(--ok-dot);box-shadow:0 0 0 4px rgba(47,158,107,.18)}
+.avail.closed{color:#8A4B0A}.avail.closed .dot{background:#D98A1F}
+
+/* chat panel (replaces the cards) */
+.chat{display:flex;flex-direction:column;min-height:0;flex:1;margin-top:28px}
+.chat[hidden]{display:none}
+.chat-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.chat-head h2{margin:0;font-size:26px;font-weight:700;letter-spacing:-.02em}
+.ghost{height:36px;padding:0 12px;border-radius:var(--radius);border:1px solid rgba(255,255,255,.45);background:transparent;color:#fff;font-size:14px;font-weight:500;cursor:pointer}
+.ghost:hover{background:rgba(255,255,255,.12)}
+.ghost[aria-pressed="true"]{background:#fff;color:var(--navy)}
+.chatbox{flex:1;min-height:0;display:flex;flex-direction:column;background:#fff;color:var(--black);border-radius:var(--radius);overflow:hidden}
+@media (max-width:920px){.chatbox{height:520px;flex:none}}
+.log{flex:1;min-height:0;overflow-y:auto;padding:16px;display:flex;flex-direction:column;gap:10px;scroll-behavior:smooth}
+.msg{max-width:88%;padding:10px 13px;border-radius:var(--radius);font-size:15px;line-height:1.45;animation:in .16s ease-out}
+@keyframes in{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+.msg.agent{align-self:flex-start;background:var(--grey-100);border-left:3px solid var(--orange)}
+.msg.user{align-self:flex-end;background:var(--navy);color:#fff}
+.msg a{color:var(--navy);font-weight:600}
+.msg.typing{display:flex;gap:4px;align-items:center;height:36px}
+.msg.typing i{width:6px;height:6px;border-radius:50%;background:var(--grey-600);animation:pulse 1s ease-in-out infinite}
+.msg.typing i:nth-child(2){animation-delay:.15s}.msg.typing i:nth-child(3){animation-delay:.3s}
+@keyframes pulse{50%{transform:scale(1.5);opacity:.55}}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 16px 12px}
+.chip{min-height:36px;padding:6px 12px;border:1px solid var(--grey-300);border-radius:var(--radius);background:#fff;color:var(--black);font-size:14px;font-weight:500;cursor:pointer;text-align:left}
+.chip:hover{border-color:var(--orange);background:var(--grey-100)}
+.cform{display:flex;gap:8px;padding:12px;border-top:1px solid var(--grey-200)}
+.cform input{flex:1;min-width:0;height:44px;padding:0 12px;border:1px solid var(--grey-300);border-radius:var(--radius);background:#fff;color:var(--black);font-size:15px}
+.cform input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 1px var(--orange)}
+.iconbtn{flex:none;width:44px;height:44px;border-radius:var(--radius);border:1px solid var(--grey-300);background:#fff;color:var(--black);cursor:pointer;display:grid;place-items:center}
+.iconbtn:hover{border-color:var(--orange)}
+.iconbtn[aria-pressed="true"]{background:var(--forest);border-color:var(--forest);color:#fff}
+.sendbtn{flex:none;height:44px;padding:0 16px;border:0;border-radius:var(--radius);background:var(--orange);color:#fff;font-weight:600;cursor:pointer}
+.sendbtn:hover{background:var(--orange-press)}
+.chat-hint{font-size:13px;color:var(--text-2);padding:0 16px 10px;min-height:20px}
+
+/* RIGHT */
+.right{display:flex;align-items:center;justify-content:center;padding:56px 56px}
+@media (max-width:920px){.right{padding:32px 22px 56px}}
+.rin{width:100%;max-width:540px}
+h1{font-size:clamp(26px,2.6vw,32px);font-weight:700;letter-spacing:-.025em;line-height:1.15;margin:0 0 28px}
+
+.field{margin-bottom:14px}
+.input,.textarea{width:100%;height:52px;padding:0 16px;border:1px solid var(--border-strong);border-radius:var(--radius);background:var(--surface);font-size:16px;transition:border-color .15s}
+.textarea{height:104px;padding:12px 16px;resize:none;line-height:1.5}
+.input::placeholder,.textarea::placeholder,.phone input::placeholder{color:var(--grey-600)}
+.input:focus,.textarea:focus,.phone:focus-within{outline:none;border-color:var(--orange);box-shadow:0 0 0 1px var(--orange)}
+.phone{display:flex;align-items:center;height:52px;border:1px solid var(--border-strong);border-radius:var(--radius);overflow:hidden;background:var(--surface)}
+.cc{position:relative;display:flex;align-items:center;gap:6px;height:100%;padding:0 10px 0 14px;border-right:1px solid var(--border);cursor:pointer;flex:none;font-size:15px}
+.cc select{position:absolute;inset:0;width:100%;height:100%;opacity:0;cursor:pointer}
+.cc .fl{font-size:18px;line-height:1}
+.cc .arr{width:0;height:0;border-top:5px solid var(--grey-600);border-left:4px solid transparent;border-right:4px solid transparent}
+.cc:focus-within{outline:2px solid var(--focus);outline-offset:-2px}
+.phone input{flex:1;min-width:0;height:100%;border:0;background:transparent;padding:0 16px;font-size:16px;outline:none}
+.field.bad .input,.field.bad .textarea,.field.bad .phone{border-color:var(--err)}
+.err{display:none;color:var(--err);font-size:13.5px;margin-top:6px}
+.field.bad .err{display:block}
+
+.q{font-size:17px;font-weight:600;margin:26px 0 14px;letter-spacing:-.005em}
+.prods{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 20px;margin-bottom:6px}
+@media (max-width:440px){.prods{grid-template-columns:1fr}}
+.prod{display:flex;gap:12px;align-items:flex-start;cursor:pointer}
+.prod input{width:22px;height:22px;margin:1px 0 0;flex:none;accent-color:var(--navy);cursor:pointer}
+.prod b{display:block;font-weight:500;font-size:16px;line-height:1.3}
+.prod small{display:block;color:var(--text-2);font-size:13.5px;line-height:1.3;margin-top:1px}
+
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:100%;height:56px;border:0;border-radius:var(--radius);background:var(--orange);color:#fff;font-size:17px;font-weight:600;cursor:pointer;margin-top:18px;transition:background .15s,transform .08s}
+.btn:hover{background:var(--orange-press)}
+.btn:active{transform:scale(.99)}
+.btn[disabled]{opacity:.65;cursor:progress}
+.spin{width:18px;height:18px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+
+/* thank-you */
+.check{width:56px;height:56px;border-radius:50%;background:var(--ok-dot);display:grid;place-items:center;color:#fff;margin-bottom:26px}
+.thx h1{margin-bottom:12px;font-size:clamp(30px,3.4vw,42px)}
+.thx .lede{color:var(--text-2);font-size:18px;margin:0 0 26px}
+.summary{border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;display:grid;grid-template-columns:auto 1fr;gap:10px 22px;font-size:15.5px;margin:0}
+.summary dt{color:var(--text-2)}
+.summary dd{margin:0;overflow-wrap:anywhere}
+.booked{margin-top:20px;border:1px solid var(--ok);border-radius:var(--radius);padding:16px 20px;background:color-mix(in srgb,var(--ok) 8%,transparent)}
+.booked b{display:block;font-size:17px}
+.booked a{color:var(--text);font-weight:600}
+.small{font-size:14px;color:var(--text-2);margin:20px 0 0}
+
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001s !important;animation-iteration-count:1 !important;transition-duration:.001s !important;scroll-behavior:auto !important}
+}
+/* mobile: actions first after submit */
+@media (max-width:920px){
+  body.after .left{order:1}
+  body:not(.after) .left{order:2}
+  body.after .right{order:2}
+  body:not(.after) .right{order:1}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ═════════ LEFT ═════════ -->
+  <aside class="left" id="left">
+    <a class="wordmark" href="https://www.lyzr.ai/" aria-label="Lyzr home"><i></i>lyzr</a>
+
+    <!-- before submit: social proof -->
+    <div class="proof" id="proof">
+      <blockquote>“[Customer quote goes here]”</blockquote>
+      <p class="who">Name, title, company</p>
+      <div class="logos" aria-label="Customers"><span>WTW</span><span>VERIFONE</span><span>KPMG</span><span>AWS</span><span>HITACHI</span><span>MOVATE</span></div>
+    </div>
+
+    <!-- after submit: Want to talk now? -->
+    <div class="talk" id="talk" hidden>
+      <div id="cards">
+        <h2 tabindex="-1" id="talkTitle">Want to talk now?</h2>
+
+        <div class="tcard">
+          <h3>Chat with our AI</h3>
+          <button class="tbtn solid" id="startChat" type="button">Start chat</button>
+          <p class="meta">~5 min · text or voice</p>
+        </div>
+
+        <div class="tcard">
+          <h3>Call an SDR</h3>
+          <p class="avail" id="avail"><span class="dot"></span><span id="availTxt">Checking hours…</span></p>
+          <a class="tbtn line" id="callBtn" href="#">…</a>
+          <p class="meta" id="callMeta">SDR hours shown in your timezone</p>
+        </div>
+      </div>
+
+      <div class="chat" id="chat" hidden>
+        <div class="chat-head">
+          <h2>Chat with our AI</h2>
+          <div style="display:flex;gap:8px">
+            <button class="ghost" id="ttsBtn" type="button" aria-pressed="false">Read aloud</button>
+            <button class="ghost" id="chatBack" type="button">Back</button>
+          </div>
+        </div>
+        <div class="chatbox">
+          <div class="log" id="log" role="log" aria-live="polite" aria-label="Chat transcript"></div>
+          <div class="chips" id="chips"></div>
+          <div class="chat-hint" id="chatHint"></div>
+          <form class="cform" id="cform" autocomplete="off">
+            <button class="iconbtn" id="micBtn" type="button" aria-pressed="false" aria-label="Speak your message">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v4"/></svg>
+            </button>
+            <input id="cinput" type="text" placeholder="Ask about a product, or book a time" aria-label="Message">
+            <button class="sendbtn" type="submit">Send</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═════════ RIGHT ═════════ -->
+  <main class="right" id="main">
+    <div class="rin">
+
+      <!-- FORM -->
+      <form id="leadForm" novalidate>
+        <h1>See Lyzr on your use case</h1>
+
+        <div class="field" id="f-name">
+          <label class="sr-only" for="fullName">Full name</label>
+          <input class="input" type="text" id="fullName" autocomplete="name" placeholder="Full name" aria-describedby="e-name">
+          <div class="err" id="e-name">Enter your name.</div>
+        </div>
+        <div class="field" id="f-email">
+          <label class="sr-only" for="email">Work email</label>
+          <input class="input" type="email" id="email" autocomplete="email" placeholder="Work email" aria-describedby="e-email">
+          <div class="err" id="e-email">Enter a valid work email, like jane@company.com.</div>
+        </div>
+        <div class="field" id="f-phone">
+          <label class="sr-only" for="phone">Phone number</label>
+          <div class="phone">
+            <label class="cc" aria-label="Country code">
+              <span class="fl" id="ccFlag">🇺🇸</span><span id="ccDial">+1</span><span class="arr"></span>
+              <select id="ccSelect"></select>
+            </label>
+            <input type="tel" id="phone" autocomplete="tel-national" inputmode="tel" placeholder="Phone number" aria-describedby="e-phone">
+          </div>
+          <div class="err" id="e-phone">Enter a valid phone number, or leave it blank.</div>
+        </div>
+
+        <p class="q" id="prodQ">What products are you interested in?</p>
+        <div class="prods" role="group" aria-labelledby="prodQ">
+          <label class="prod"><input type="checkbox" name="prod" value="Opencontroller"><span><b>Opencontroller</b><small>Control plane</small></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Workflow Automation"><span><b>Workflow Automation</b></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Architect"><span><b>Architect</b><small>Agentic prototyping</small></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Madison"><span><b>Madison</b><small>Agents for banking</small></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Optimus"><span><b>Optimus</b><small>AI hardware</small></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Fine-tuning"><span><b>Fine-tuning</b></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="Open Cowork"><span><b>Open Cowork</b><small>Cowork on open-source models</small></span></label>
+          <label class="prod"><input type="checkbox" name="prod" value="White-label Agent Builder"><span><b>White-label Agent Builder</b></span></label>
+        </div>
+
+        <p class="q" id="msgQ">Any other information you’d like to add?</p>
+        <textarea class="textarea" id="message" placeholder="Your message" aria-labelledby="msgQ"></textarea>
+
+        <button class="btn" type="submit" id="submitBtn"><span id="submitTxt">Book a demo</span></button>
+      </form>
+
+      <!-- THANK YOU -->
+      <section class="thx" id="thx" hidden>
+        <div class="check" aria-hidden="true"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h1 tabindex="-1" id="thxTitle">Thank you, you’re all set</h1>
+        <p class="lede" id="thxLede">An SDR will reach out shortly to book your demo.</p>
+        <dl class="summary" id="summary"></dl>
+        <div class="booked" id="booked" hidden></div>
+        <p class="small" id="thxSmall"></p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   CONFIG + INTEGRATION HOOKS  (swap the async hooks for real endpoints)
+   ═══════════════════════════════════════════════════════════════════ */
+const CONFIG = {
+  DEMO_MINUTES: 30,
+  SDR_NUMBER_DISPLAY: '+1 (201) 555-0142',   // TODO: replace with the Dialpad NJ/NY number
+  SDR_NUMBER_TEL: '+12015550142',
+  // SDR shift, IST: 9:00 AM to 1:30 AM next day (US visitors). India visitors see 9:00 AM to 6:00 PM IST.
+  SDR_START_MIN: 9 * 60, SDR_END_MIN: 25.5 * 60, SDR_INDIA_END_MIN: 18 * 60,
+  SDR_WEEKDAYS_ONLY: true,                   // assumption: Mon–Fri shifts. Set false for 7 days.
+
+  // 1) Lead capture → creates the HubSpot contact (source tagged), triggers thanks email + scoring.
+  async submitLead(payload){ await sleep(700); console.log('[hook] submitLead', payload); return { leadId: 'lead_' + Math.random().toString(36).slice(2, 10) }; },
+  // 2) Chat transcript → attached to the HubSpot contact.
+  async saveTranscript(leadId, messages){ console.log('[hook] saveTranscript', leadId, messages.length, 'messages'); },
+  // 3) Availability for one day (AE windows). Return Date objects.
+  async getSlots(day){
+    const base = [[9,30],[11,0],[14,0],[16,30]]; const seed = day.getDate() + day.getMonth();
+    return base.filter((_, i) => !(seed % 3 === 0 && i === seed % 4)).map(([h, m]) => new Date(day.getFullYear(), day.getMonth(), day.getDate(), h, m));
+  },
+  // 4) Book the slot (HubSpot Meetings / calendar invite).
+  async confirmBooking(b){ await sleep(500); console.log('[hook] confirmBooking', b); return { ref: 'LYZR-' + Math.random().toString(36).slice(2, 8).toUpperCase() }; }
+};
+
+/* ───────── helpers ───────── */
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const TZ = Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const app = { lead: null, booking: null };
+
+/* ───────── countries ───────── */
+const COUNTRIES = [
+['US','United States','+1'],['CA','Canada','+1'],['GB','United Kingdom','+44'],['IN','India','+91'],['AU','Australia','+61'],
+['SG','Singapore','+65'],['AE','United Arab Emirates','+971'],['SA','Saudi Arabia','+966'],['QA','Qatar','+974'],['KW','Kuwait','+965'],
+['DE','Germany','+49'],['FR','France','+33'],['NL','Netherlands','+31'],['ES','Spain','+34'],['IT','Italy','+39'],['IE','Ireland','+353'],
+['SE','Sweden','+46'],['NO','Norway','+47'],['DK','Denmark','+45'],['FI','Finland','+358'],['CH','Switzerland','+41'],['BE','Belgium','+32'],
+['PL','Poland','+48'],['PT','Portugal','+351'],['TR','Turkey','+90'],['IL','Israel','+972'],['JP','Japan','+81'],['KR','South Korea','+82'],
+['CN','China','+86'],['HK','Hong Kong','+852'],['PH','Philippines','+63'],['ID','Indonesia','+62'],['MY','Malaysia','+60'],['TH','Thailand','+66'],
+['VN','Vietnam','+84'],['NZ','New Zealand','+64'],['PK','Pakistan','+92'],['BD','Bangladesh','+880'],['LK','Sri Lanka','+94'],
+['BR','Brazil','+55'],['MX','Mexico','+52'],['AR','Argentina','+54'],['CL','Chile','+56'],['CO','Colombia','+57'],
+['ZA','South Africa','+27'],['NG','Nigeria','+234'],['KE','Kenya','+254'],['EG','Egypt','+20']
+];
+const flag = iso => String.fromCodePoint(...[...iso].map(c => 127397 + c.charCodeAt(0)));
+const ccSel = $('#ccSelect');
+COUNTRIES.forEach(([iso, name, dial]) => { const o = document.createElement('option'); o.value = iso; o.textContent = `${name} (${dial})`; ccSel.appendChild(o); });
+const ccInfo = () => COUNTRIES.find(c => c[0] === ccSel.value) || COUNTRIES[0];
+function syncCC(){ const [iso,,dial] = ccInfo(); $('#ccFlag').textContent = flag(iso); $('#ccDial').textContent = dial; }
+(function(){ const r = ((navigator.language || 'en-US').split('-')[1] || '').toUpperCase(); ccSel.value = COUNTRIES.some(c => c[0] === r) ? r : 'US'; syncCC(); })();
+ccSel.addEventListener('change', syncCC);
+
+/* ═════════ FORM ═════════ */
+const setBad = (id, bad) => $('#' + id).classList.toggle('bad', bad);
+function validate(){
+  const name = $('#fullName').value.trim(), email = $('#email').value.trim();
+  const digits = $('#phone').value.replace(/\D/g, '');
+  const errs = {
+    'f-name': !name,
+    'f-email': !EMAIL_RE.test(email),
+    'f-phone': $('#phone').value.trim() !== '' && (digits.length < 6 || digits.length > 14)
+  };
+  Object.entries(errs).forEach(([k, v]) => setBad(k, v));
+  const bad = Object.keys(errs).find(k => errs[k]);
+  if (bad){ $('#' + bad).querySelector('input').focus(); return null; }
+  return {
+    name, email,
+    phone: $('#phone').value.trim() ? `${ccInfo()[2]} ${$('#phone').value.trim()}` : '',
+    country: ccInfo()[0],
+    products: $$('input[name="prod"]:checked').map(i => i.value),
+    message: $('#message').value.trim(),
+    timezone: TZ, source: 'book-a-demo page', page: location.href
+  };
+}
+['fullName','email','phone'].forEach(id => $('#' + id).addEventListener('input', e => e.target.closest('.field').classList.remove('bad')));
+
+$('#leadForm').addEventListener('submit', async e => {
+  e.preventDefault();
+  const payload = validate(); if (!payload) return;
+  const btn = $('#submitBtn'); btn.disabled = true; $('#submitTxt').textContent = 'Sending';
+  btn.insertAdjacentHTML('beforeend', '<span class="spin" id="spin" aria-hidden="true"></span>');
+  try {
+    const r = await CONFIG.submitLead(payload); payload.leadId = r.leadId; app.lead = payload; showAfter();
+  } catch (err){
+    console.error(err); $('#submitTxt').textContent = 'Try again';
+  } finally {
+    btn.disabled = false; $('#spin')?.remove(); if ($('#submitTxt').textContent === 'Sending') $('#submitTxt').textContent = 'Book a demo';
+  }
+});
+
+/* ═════════ AFTER SUBMIT ═════════ */
+const first = () => (app.lead.name.split(/\s+/)[0] || 'there');
+function showAfter(){
+  document.body.classList.add('after');
+  $('#leadForm').hidden = true; $('#proof').hidden = true;
+  $('#thx').hidden = false; $('#talk').hidden = false;
+  renderSummary(); renderSdr(); setInterval(renderSdr, 30000);
+  $('#thxTitle').focus({ preventScroll: true });
+  window.scrollTo({ top: 0, behavior: reduceMotion ? 'auto' : 'smooth' });
+}
+function renderSummary(){
+  const l = app.lead, rows = [['Products', l.products.length ? l.products.join(', ') : 'Not specified'], ['Email', l.email]];
+  if (l.phone) rows.push(['Phone', l.phone]);
+  if (app.booking) rows.push(['Demo', `${fmtDayLong(app.booking.slot)}, ${fmtTime(app.booking.slot)}`]);
+  const dl = $('#summary'); dl.innerHTML = '';
+  rows.forEach(([k, v]) => { const dt = document.createElement('dt'), dd = document.createElement('dd'); dt.textContent = k; dd.textContent = v; dl.append(dt, dd); });
+  $('#thxSmall').textContent = `A confirmation is on its way to ${l.email}.`;
+}
+
+/* ───────── Call an SDR: live hours in the visitor's timezone ───────── */
+function sdrStatus(now = new Date()){
+  const IST = 19800000, india = /^Asia\/(Kolkata|Calcutta)$/.test(TZ);
+  const ist = new Date(now.getTime() + IST);
+  const midnight = Date.UTC(ist.getUTCFullYear(), ist.getUTCMonth(), ist.getUTCDate());   // IST midnight, expressed as fake-UTC
+  const at = (base, min) => new Date(base + min * 60000 - IST);
+  const workday = base => { const d = new Date(base).getUTCDay(); return !CONFIG.SDR_WEEKDAYS_ONLY || (d >= 1 && d <= 5); };
+  const endMin = india ? CONFIG.SDR_INDIA_END_MIN : CONFIG.SDR_END_MIN;
+  for (const off of [-1, 0]){
+    const base = midnight + off * 86400000, s = at(base, CONFIG.SDR_START_MIN), e = at(base, endMin);
+    if (workday(base) && now >= s && now < e) return { open: true, until: e };
+  }
+  for (let off = 0; off < 8; off++){
+    const base = midnight + off * 86400000, s = at(base, CONFIG.SDR_START_MIN);
+    if (workday(base) && s > now) return { open: false, opens: s };
+  }
+  return { open: false, opens: null };
+}
+const fmtT = d => d.toLocaleTimeString([], { hour:'numeric', minute:'2-digit' });
+function renderSdr(){
+  const st = sdrStatus(), now = new Date(), box = $('#avail');
+  box.className = 'avail ' + (st.open ? 'open' : 'closed');
+  const call = $('#callBtn'); call.href = 'tel:' + CONFIG.SDR_NUMBER_TEL;
+  if (st.open){
+    $('#availTxt').textContent = /^Asia\/(Kolkata|Calcutta)$/.test(TZ)
+      ? `Open now · 9:00 AM – 6:00 PM your time` : `Open now · until ${fmtT(st.until)} your time`;
+    call.textContent = CONFIG.SDR_NUMBER_DISPLAY;
+    $('#callMeta').textContent = 'SDR hours shown in your timezone';
+  } else {
+    let when = 'soon';
+    if (st.opens) when = (st.opens.toDateString() === now.toDateString() ? '' : st.opens.toLocaleDateString([], { weekday:'short' }) + ' ') + fmtT(st.opens);
+    $('#availTxt').textContent = `Closed · opens ${when} your time`;
+    call.textContent = `Leave a voicemail · ${CONFIG.SDR_NUMBER_DISPLAY}`;
+    $('#callMeta').textContent = 'After-hours calls go to voicemail. The next SDR on shift calls you back.';
+  }
+}
+
+/* ═════════ CHAT WITH OUR AI ═════════ */
+const chat = { msgs: [], flow: null, busy: false, tts: false, saveT: null };
+const log = $('#log');
+const norm = s => s.toLowerCase().replace(/[^a-z0-9:@.\s]/g, ' ').replace(/\s+/g, ' ').trim();
+const fmtDayShort = d => d.toLocaleDateString(undefined, { weekday:'short', month:'short', day:'numeric' });
+const fmtDayLong  = d => d.toLocaleDateString(undefined, { weekday:'long', month:'long', day:'numeric' });
+const fmtTime = d => d.toLocaleTimeString(undefined, { hour:'numeric', minute:'2-digit' });
+const fmtTz = d => d.toLocaleTimeString(undefined, { timeZoneName:'short' }).split(' ').pop();
+const WEEKDAYS = ['sunday','monday','tuesday','wednesday','thursday','friday','saturday'];
+const NUMW = { one:1,two:2,three:3,four:4,five:5,six:6,seven:7,eight:8,nine:9,ten:10,eleven:11,twelve:12 };
+const YES = /\b(yes|yeah|yep|yup|sure|ok|okay|correct|confirm|book it|go ahead|sounds good|perfect|please)\b/;
+const NO = /\b(no|nope|nah|change|different|another|earlier|later)\b/;
+
+const PRODUCTS = {
+  opencontroller: ['Opencontroller', /opencontroller|control plane|sprawl/, 'Opencontroller is Lyzr’s control plane for AI agent sprawl.'],
+  architect:      ['Architect', /architect|prototyp/, 'Architect is Lyzr’s agentic prototyping product.'],
+  madison:        ['Madison', /madison|banking|bank\b/, 'Madison is Lyzr’s agentic banking OS: agents built for banking workflows.'],
+  optimus:        ['Optimus', /optimus|hardware/, 'Optimus is Lyzr’s AI hardware line.'],
+  workflow:       ['Workflow Automation', /workflow|automat/, 'Workflow Automation covers running agents inside your business processes.'],
+  finetune:       ['Fine-tuning', /fine.?tun/, 'Fine-tuning is on our list for tailoring models to your data.'],
+  cowork:         ['Open Cowork', /cowork/, 'Open Cowork is Cowork running on open-source models.'],
+  whitelabel:     ['White-label Agent Builder', /white.?label|agent builder|reseller/, 'The White-label Agent Builder lets you offer agent building under your own brand.']
+};
+
+function chatAdd(role, text, link){
+  const d = document.createElement('div'); d.className = 'msg ' + role; d.textContent = text;
+  if (link){ d.append(' '); const a = document.createElement('a'); a.href = link.href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = link.text; d.append(a); }
+  log.appendChild(d); log.scrollTop = log.scrollHeight;
+  chat.msgs.push({ role, text, at: new Date().toISOString() });
+  clearTimeout(chat.saveT); chat.saveT = setTimeout(() => CONFIG.saveTranscript(app.lead.leadId, chat.msgs), 900);
+}
+function setChips(list){
+  const box = $('#chips'); box.innerHTML = '';
+  (list || []).forEach(c => { const b = document.createElement('button'); b.type = 'button'; b.className = 'chip'; b.textContent = c.label; b.addEventListener('click', () => onUser(c.label, c)); box.appendChild(b); });
+  log.scrollTop = log.scrollHeight;
+}
+let speakCancel = null;
+function speak(text){
+  return new Promise(res => {
+    if (!chat.tts || !('speechSynthesis' in window)) return res();
+    let done = false; const fin = () => { if (!done){ done = true; clearTimeout(g); speakCancel = null; res(); } };
+    const u = new SpeechSynthesisUtterance(text); u.rate = 1.03; u.onend = fin; u.onerror = fin;
+    const g = setTimeout(fin, Math.max(3000, text.split(/\s+/).length * 460) + 1500);
+    speakCancel = () => { speechSynthesis.cancel(); fin(); };
+    try { speechSynthesis.cancel(); speechSynthesis.speak(u); } catch { fin(); }
+  });
+}
+async function agentSay(text, chips, link){
+  chat.busy = true; setChips([]);
+  const t = document.createElement('div'); t.className = 'msg agent typing'; t.innerHTML = '<i></i><i></i><i></i>'; log.appendChild(t); log.scrollTop = log.scrollHeight;
+  await sleep(reduceMotion ? 100 : 450 + Math.min(700, text.length * 7));
+  t.remove(); chatAdd('agent', text, link); chat.busy = false; setChips(chips); await speak(text);
+}
+
+/* open / close */
+$('#startChat').addEventListener('click', openChat);
+$('#chatBack').addEventListener('click', () => { speakCancel && speakCancel(); stopMic(); $('#chat').hidden = true; $('#cards').hidden = false; renderSdr(); });
+async function openChat(){
+  $('#cards').hidden = true; $('#chat').hidden = false; $('#cinput').focus({ preventScroll: true });
+  if (chat.msgs.length) return;
+  const picks = app.lead.products.slice(0, 2).map(p => ({ label: `Tell me about ${p}`, act: 'product', key: Object.keys(PRODUCTS).find(k => PRODUCTS[k][0] === p) }));
+  await agentSay(`Hi ${first()}, I’m Lyzr’s AI assistant. I can answer quick product questions, or book a time for your demo right now.`,
+    [{ label: 'Book a time', act: 'book' }, ...picks, { label: 'Talk to a person', act: 'person' }]);
+}
+$('#ttsBtn').addEventListener('click', () => {
+  chat.tts = !chat.tts; $('#ttsBtn').setAttribute('aria-pressed', String(chat.tts)); if (!chat.tts) speakCancel && speakCancel();
+});
+
+/* dictation (browser speech input; typing always works) */
+const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recog = null;
+function stopMic(){ try { recog && recog.abort(); } catch {} recog = null; $('#micBtn').setAttribute('aria-pressed', 'false'); }
+$('#micBtn').addEventListener('click', () => {
+  if ($('#micBtn').getAttribute('aria-pressed') === 'true'){ stopMic(); return; }
+  if (!SR){ $('#chatHint').textContent = 'Voice input isn’t supported in this browser. Type instead.'; return; }
+  speakCancel && speakCancel();
+  try {
+    recog = new SR(); recog.lang = navigator.language || 'en-US'; recog.interimResults = true;
+    recog.onresult = e => {
+      let txt = '', fin = false; for (let i = e.resultIndex; i < e.results.length; i++){ txt += e.results[i][0].transcript; if (e.results[i].isFinal) fin = true; }
+      $('#cinput').value = txt; if (fin){ $('#cinput').value = ''; stopMic(); $('#chatHint').textContent = ''; onUser(txt.trim()); }
+    };
+    recog.onerror = e => { $('#chatHint').textContent = (e.error === 'not-allowed' || e.error === 'service-not-allowed') ? 'Microphone is blocked. Type instead.' : (e.error === 'no-speech' ? 'Didn’t catch that. Tap the mic to try again.' : ''); };
+    recog.onend = () => $('#micBtn').setAttribute('aria-pressed', 'false');
+    recog.start(); $('#micBtn').setAttribute('aria-pressed', 'true'); $('#chatHint').textContent = 'Listening…';
+  } catch { $('#chatHint').textContent = 'Voice input isn’t available. Type instead.'; }
+});
+$('#cform').addEventListener('submit', e => { e.preventDefault(); const v = $('#cinput').value.trim(); if (!v) return; $('#cinput').value = ''; speakCancel && speakCancel(); onUser(v); });
+
+/* parsing */
+function businessDays(n){ const out = [], d = new Date(); d.setHours(0,0,0,0); while (out.length < n){ d.setDate(d.getDate() + 1); if (d.getDay() && d.getDay() !== 6) out.push(new Date(d)); } return out; }
+function parseDay(text, days){
+  const t = norm(text);
+  if (/tomorrow/.test(t)) return days[0];
+  if (/next week/.test(t)) return days.find(d => d.getDay() === 1 && d > days[0]) || days[days.length - 1];
+  for (const d of days){ const n = WEEKDAYS[d.getDay()]; if (t.includes(n) || t.split(' ').includes(n.slice(0, 3))) return d; }
+  const m = t.match(/\b(\d{1,2})(st|nd|rd|th)?\b/); if (m){ const hit = days.find(d => d.getDate() === +m[1]); if (hit) return hit; }
+}
+function parseSlot(text, slots){
+  const t = norm(text);
+  if (/\b(first|earliest)\b/.test(t)) return slots[0];
+  if (/\bsecond\b/.test(t) && slots[1]) return slots[1];
+  if (/\b(last|latest)\b/.test(t)) return slots[slots.length - 1];
+  if (/\bmorning\b/.test(t)) return slots.find(s => s.getHours() < 12);
+  if (/\bafternoon\b/.test(t)) return slots.find(s => s.getHours() >= 12);
+  let h = null, mi = 0; const m = t.match(/\b(\d{1,2})(?::(\d{2}))?\s*(am|pm|a m|p m)?\b/);
+  if (m){ h = +m[1]; mi = m[2] ? +m[2] : 0; if (m[3]){ const pm = m[3][0] === 'p'; if (pm && h < 12) h += 12; if (!pm && h === 12) h = 0; } }
+  else for (const w in NUMW) if (new RegExp('\\b' + w + '\\b').test(t)){ h = NUMW[w]; if (/\b(thirty|half)\b/.test(t)) mi = 30; break; }
+  if (h === null) return;
+  const c = slots.filter(s => (s.getHours() % 12 || 12) === (h % 12 || 12) && (mi === 0 || s.getMinutes() === mi));
+  if (!c.length) return; if (/\b(am|a m)\b/.test(t)) return c.find(s => s.getHours() < 12) || c[0]; if (/\b(pm|p m)\b/.test(t)) return c.find(s => s.getHours() >= 12) || c[0]; return c[0];
+}
+
+/* booking flow inside the chat */
+async function beginBooking(){
+  const days = businessDays(10);
+  const chips = [...days.slice(0, 4).map(d => ({ label: fmtDayShort(d), act: 'day', val: d })), { label: 'Next week', act: 'day', val: days.find(d => d.getDay() === 1 && d > days[0]) || days[5] }];
+  chat.flow = { step: 'day', days, chips };
+  await agentSay('Which day works best for your 30-minute demo?', chips);
+}
+async function pickDay(d){
+  const slots = await CONFIG.getSlots(d);
+  const chips = slots.map(s => ({ label: fmtTime(s), act: 'slot', val: s })).concat([{ label: 'Different day', act: 'book' }]);
+  chat.flow = { step: 'time', day: d, slots, chips };
+  const said = slots.map(fmtTime).join(', ').replace(/, ([^,]*)$/, ' or $1');
+  await agentSay(`On ${fmtDayLong(d)} I have ${said} (${TZ.replace('_', ' ')} time). Which suits you?`, chips);
+}
+async function pickSlot(s){
+  const chips = [{ label: 'Yes, book it', act: 'confirm' }, { label: 'Change the time', act: 'book' }];
+  chat.flow = { step: 'confirm', slot: s, chips };
+  await agentSay(`That’s ${fmtDayLong(s)} at ${fmtTime(s)}. Shall I lock it in?`, chips);
+}
+async function doBook(){
+  const s = chat.flow.slot; chat.busy = true;
+  const r = await CONFIG.confirmBooking({ lead: app.lead, start: s.toISOString(), minutes: CONFIG.DEMO_MINUTES, tz: TZ, channel: 'chat' });
+  const end = new Date(s.getTime() + CONFIG.DEMO_MINUTES * 60000), st = d => d.toISOString().replace(/[-:]/g, '').replace(/\.\d{3}/, '');
+  const href = 'https://calendar.google.com/calendar/render?' + new URLSearchParams({ action:'TEMPLATE', text:'Lyzr live demo', dates:`${st(s)}/${st(end)}`, details:`30-minute live walkthrough of Lyzr. Reference ${r.ref}.` });
+  app.booking = { slot: s, ref: r.ref, href }; chat.flow = null; chat.busy = false;
+  await agentSay(`Done. You’re booked for ${fmtDayLong(s)} at ${fmtTime(s)} ${fmtTz(s)}. Your reference is ${r.ref}.`,
+    [{ label: 'Tell me about a product', act: 'products' }, { label: 'Talk to a person', act: 'person' }], { href, text: 'Add to Google Calendar' });
+  renderSummary();
+  $('#thxLede').textContent = 'Your demo is booked. An SDR will confirm the details with you.';
+  const b = $('#booked'); b.hidden = false; b.innerHTML = '';
+  const t = document.createElement('b'); t.textContent = `${fmtDayLong(s)}, ${fmtTime(s)} ${fmtTz(s)}`;
+  const a = document.createElement('a'); a.href = href; a.target = '_blank'; a.rel = 'noopener'; a.textContent = 'Add to Google Calendar';
+  b.append(t, document.createTextNode(`Reference ${r.ref}. `), a);
+}
+
+/* answers */
+async function productAnswer(key){
+  const p = PRODUCTS[key];
+  await agentSay(`${p[2]} I only have the short version here. Your demo will cover ${p[0]} live.`,
+    [{ label: 'Book a time', act: 'book' }, { label: 'Ask about another product', act: 'products' }, { label: 'Talk to a person', act: 'person' }]);
+}
+async function personAnswer(){
+  const st = sdrStatus();
+  const msg = st.open ? `An SDR is on right now. Use the Call an SDR card to ring ${CONFIG.SDR_NUMBER_DISPLAY}.`
+                      : 'The SDR line is closed at the moment. Calls go to voicemail and the next SDR on shift will call you back. I can also book a time for you now.';
+  await agentSay(msg, [{ label: 'Show call options', act: 'cards' }, { label: 'Book a time', act: 'book' }]);
+}
+async function listProducts(){
+  await agentSay('Which product would you like to know about?', Object.keys(PRODUCTS).map(k => ({ label: PRODUCTS[k][0], act: 'product', key: k })));
+}
+
+/* dispatcher */
+async function onUser(text, chip){
+  if (chat.busy) return;
+  chatAdd('user', text);
+  if (chip){
+    switch (chip.act){
+      case 'book': return beginBooking();
+      case 'day': return pickDay(chip.val);
+      case 'slot': return pickSlot(chip.val);
+      case 'confirm': return doBook();
+      case 'product': return productAnswer(chip.key);
+      case 'products': return listProducts();
+      case 'person': return personAnswer();
+      case 'cards': $('#chatBack').click(); return;
+    }
+  }
+  const f = chat.flow, t = norm(text);
+  if (f){
+    if (f.step === 'day'){ const d = parseDay(text, f.days); return d ? pickDay(d) : agentSay('I didn’t catch a day. Try “tomorrow”, “Thursday” or “next week”.', f.chips); }
+    if (f.step === 'time'){
+      if (/\b(different|another|other)\b.*\bday\b/.test(t)) return beginBooking();
+      const s = parseSlot(text, f.slots); return s ? pickSlot(s) : agentSay('Which of those times works? You can say the time, or “the first one”.', f.chips);
+    }
+    if (f.step === 'confirm'){
+      if (NO.test(t)) return beginBooking();
+      if (YES.test(t)) return doBook();
+      return agentSay('Say “yes” to book it, or “change” to pick another time.', f.chips);
+    }
+  }
+  if (/\b(book|schedule|slot|appointment|calendar|demo time|set up a time)\b/.test(t)) return beginBooking();
+  if (/\b(person|human|someone|sdr|sales|call me|phone|speak to)\b/.test(t)) return personAnswer();
+  for (const k in PRODUCTS) if (PRODUCTS[k][1].test(t)) return productAnswer(k);
+  await agentSay('Good question. I’ve added it to your request so your SDR has it before the demo. Want to book a time now or talk to someone?',
+    [{ label: 'Book a time', act: 'book' }, { label: 'Ask about a product', act: 'products' }, { label: 'Talk to a person', act: 'person' }]);
+}
+</script>
+</body>
+</html>
